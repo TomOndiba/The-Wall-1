@@ -1,0 +1,108 @@
+<head>
+  <title>The Wall</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/js.js') }}"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">The Wall</a>
+    {% if session['first_name'] %}
+  
+    <span class="navbar-text navbarstuff">
+     Hey {{session['first_name']}} {{session['last_name']}}!
+    </span>
+
+  <form action='/logout' method='POST'>
+  <input type="hidden" value="logout" name="logout">
+  <button class="btn btn-inline btn-light my-2 my-sm-0 "" type="submit">Log Out</button>
+	</div>
+  </form> 
+    {% endif %}
+</nav>
+
+<div class="container-fluid" id="background">
+<br>
+
+<div class="container">
+<form action='/message' method='POST'>
+  <div class="form-group">
+	<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="width:80%; margin: 0 auto 0 auto; " placeholder="Enter a Message!" name="message"></textarea>
+	<input type="submit" href="#" class="btn btn-light text-gray-dark border border-primary float-right" style="margin:1% 10% 0 0" value="Submit Message"></a><br>
+  </div>
+</form>
+</div>
+
+<br>
+
+{% if all_messages %}
+	{% for message in all_messages: %}
+<div class=container id="message">
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">{{ message['first_name'] }} {{ message['last_name'] }} {{ message['created_at'] }}</h4><hr>
+    <p class="card-text">{{message['message']}}</p>
+
+	<br>
+		
+		{% for comment in all_comments %}
+
+		{% if comment['message_id'] == message['id'] %}
+		
+	<div class="card" id="comments">
+  <div class="card-body bg-light">
+    <h6 class="card-title">{{comment['first_name']}} {{comment['last_name']}} {{comment['created_at']}}</h6><hr>
+    <p class="card-text">{{comment['comment']}}</p>
+
+  </div>
+
+</div>
+		{% endif %}
+		{% endfor %}
+		
+</div>
+		
+
+<form action='/comment' method='POST'>
+  <div class="form-group">
+	<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="width:80%; margin: 0 auto 0 auto; " placeholder="Enter a Comment" name="comment"></textarea>
+	<input type="hidden" name="message_id" value="{{ message['id'] }}" class="button"/>
+	<input type="submit" class="btn btn-light text-gray-dark border border-primary float-right" value="Comment" style="margin:1% 10% 0 2%"><br><br>
+	<hr>
+  </div>
+</form>
+
+    	<form action="/remove_message/<message_id>" method='POST'>
+		<input type="hidden" name="messagedel" value="{{ message['id'] }}" class="button"/>
+		<input type="submit" value="Delete Message" class="btn btn-light text-danger border-primary float-right" style="margin: 10px;">
+		</form>
+</div>
+</div>
+<br>
+	{% endfor %}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+

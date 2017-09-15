@@ -1,0 +1,230 @@
+<html>
+<head>
+  <title>The Wall</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/js.js') }}"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">The Wall</a>
+    {% if session['first_name'] %}
+  
+    <span class="navbar-text navbarstuff float-right"">
+     Hey {{session['first_name']}} {{session['last_name']}}!
+    </span>
+
+
+  <form action='/logout' method='POST'>
+  <input type="hidden" value="logout" name="logout">
+  <button class="btn btn-inline btn-light my-2 my-sm-0 "" type="submit">Log Out</button>
+	</div>
+  </form> 
+    {% endif %}
+</nav>
+
+
+
+<div class="container" id="indexlogin">
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+<form action='/login' method='POST'>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email" name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+<medium id="emailHelp" class="form-text text-muted">Do you still not have an account?</medium>
+</form>
+<button class="btn btn-secondary" id="registerbutton" data-toggle="modal" data-target="#mymodal">Click here to register!</button>
+
+</div>
+
+
+
+<!-- MODAL  -->
+<div class="modal" id="mymodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Registration:</h2>
+      </div>
+        <div class="modal-body">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                
+                {% endif %}
+                {% endwith %}
+<form action='/registration' method='POST'>  
+<div class="form-group">
+    <label for="first_name"> First Name:</label>
+    <input type="text" class="form-control" id="first_name" aria-describedby="first_name" placeholder="Enter First Name" name="first_name">
+  </div>
+    <div class="form-group">
+    <label for="last_name"> Last Name:</label>
+    <input type="text" class="form-control" id="last_name" aria-describedby="last_name" placeholder="Enter last Name" name="last_name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="text" class="form-control" id="email" aria-describedby="email" placeholder="Enter email" name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+  </div>
+    <div class="form-group">
+    <label for="exampleInputPassword1">Password Confirmation</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" name="passwordconfirm">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div> 
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    var messages = "{{ get_flashed_messages() }}";
+
+    if (typeof messages != 'undefined' && messages != '[]') {
+        $("#mymodal").modal();
+    };
+});
+</script>
+
+
+
+
+
+
+<!-- <h2>Login:</h2>
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+ <form action='/login' method='POST'>
+    <label for="email">Email:<input type="text" name="email" id="email"></label>
+    <label for="password">Password:<input type="password" name="password" id="password"></label>
+    <input type="submit" value="Login">
+  </form> -->
+
+
+
+
+
+
+
+<!-- 
+<h2>Registration:</h2>
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <form action='/registration' method='POST'>
+    <label for="first_name">First Name:<input type="text" name="first_name" id="first_name"></label>
+    <label for="last_name">Last Name:<input type="text" name="last_name" id="last_name"></label>
+    <label for="email">Email:<input type="text" name="email" id="email"></label>
+    <label for="password">Password:<input type="password" name="password" id="password"></label>
+    <label for="passwordconfirm">Password Confirmation:<input type="password" name="passwordconfirm" id="passwordconfirm"></label>
+    <input type="submit" value="Add">
+  </form>
+ -->
+
+
+
+<!-- <script>
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#registerbutton').focus()
+})
+
+$(document).on('click', '#registerbutton', function(){
+$("#indexlogin").html(
+
+	`
+  <h2>Registration:</h2>
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+<form action='/login' method='POST'>	
+<div class="form-group">
+    <label for="first_name"> First Name:</label>
+    <input type="text" class="form-control" id="first_name" aria-describedby="first_name" placeholder="Enter First Name" name="first_name">
+  </div>
+  	<div class="form-group">
+    <label for="last_name"> Last Name:</label>
+    <input type="text" class="form-control" id="last_name" aria-describedby="last_name" placeholder="Enter last Name" name="last_name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email" name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+  </div>
+    <div class="form-group">
+    <label for="exampleInputPassword1">Password Confirmation</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwordconfirm" name="passwordconfirm">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+<medium id="emailHelp" class="form-text text-muted">Do you still not have an account?</medium>
+<button class="btn btn-secondary" id="registerbutton">Click here to register!</button>
+</form>
+</div>
+`
+	)
+console.log("Hey");
+})
+
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+
